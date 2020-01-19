@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/reg0/rj-scrapper/issues"
   },
-  "homepage": "https://github.com/reg0/rj-scrapper#readme"
+  "homepage": "https://github.com/reg0/rj-scrapper#readme",
+  "dependencies": {
+    "puppeteer": "^2.0.0"
+  }
 }
