@@ -3,9 +3,7 @@ import { ElementHandle } from "puppeteer";
 import { SELECTORS } from "./constants";
 import { asyncMap } from "../utils/async";
 
-export class RouteStopsList {
-  private constructor(private stops: RouteStopLink[]) {}
-
+export class RouteStopsListFactory {
   static async init(el: ElementHandle<Element>) {
     const getTrimmedName = async (link: ElementHandle<Element>) => {
       const fullText = await link.evaluate(l => l.textContent.trim());
@@ -16,6 +14,11 @@ export class RouteStopsList {
 
     return new RouteStopsList(stops);
   }
+}
+
+
+export class RouteStopsList {
+  constructor(private stops: RouteStopLink[]) {}
 
   getStop(name: string): RouteStopLink {
     return this.stops.find(it => it.name === name);

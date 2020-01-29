@@ -1,8 +1,8 @@
 // import { ZtmScraper, Query, RouteWithTimes, RouteChecker, Route } from "./interfaces";
-import puppeteer, { Page, Browser, ElementHandle } from 'puppeteer';
+import puppeteer, { Page } from 'puppeteer';
 import { asyncFind, asyncFilter, asyncMap, asyncForEach } from "../utils/async";
 import { LineType, SELECTORS, HOME_PAGE } from "./constants";
-import { RouteStopsList } from './route-stops-list';
+import { RouteStopsListFactory } from './route-stops-list';
 import { ScrapeContext } from './interfaces';
 // class ZtmScraperImpl implements ZtmScraper {
 
@@ -107,7 +107,7 @@ export class ScrapeBuilder {
   goToRoute(origin: string, destination: string) {
     this.steps.push(
       async (page: Page) => {
-        const stopsLists = await asyncMap(await page.$$(SELECTORS.LinePage.StopsList), RouteStopsList.init);
+        const stopsLists = await asyncMap(await page.$$(SELECTORS.LinePage.StopsList), RouteStopsListFactory.init);
         const stopsList = stopsLists.find(sl => sl.matchesRoute(origin, destination));
         await (stopsList.getStop(origin).el).click();
         await page.waitForSelector(SELECTORS.TimetablePage.TodaysRidesHeader);
