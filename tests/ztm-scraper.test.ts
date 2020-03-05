@@ -1,8 +1,9 @@
 import { ScrapeBuilder } from "../src/rjztm/ztm-scraper";
 import { LineType, SELECTORS } from "../src/rjztm/constants";
 import { ScrapeContext } from "../src/rjztm/interfaces";
+import { time2ISO } from "../src/utils/time";
 
-let ctx: ScrapeContext;
+let ctx: ScrapeContext<undefined>;
 
 beforeAll(async () => {
   ctx = await ScrapeBuilder.initScrapeContext();
@@ -65,12 +66,34 @@ describe('ScrapeBuilder', () => {
     const direction = await page.$eval(SELECTORS.TimetablePage.Direction, el => (el as HTMLElement).innerText.trim());
 
     // then
-    expect(direction.indexOf('Kierunek: Gołonóg Podstacja Pętla')).toBeGreaterThanOrEqual(0);
+    console.log(direction);
+    expect(direction.indexOf('Kierunek: Tworze')).toBeGreaterThanOrEqual(0);
 
     // when
     const todaysRidesHeader = await page.$eval(SELECTORS.TimetablePage.TodaysRidesHeader, el => (el as HTMLElement).innerText.trim());
 
     // then
     expect(todaysRidesHeader.indexOf('Wszystkie kursy dnia')).toBeGreaterThanOrEqual(0);
+  });
+
+  test('004. getRides() returns list of rides', async () => {
+    // given / when
+    const {output} = await (await ScrapeBuilder.init(ctx))
+      .goToZtm()
+      .goToLine(LineType.TRAM, '21')
+      .goToRoute('Pogoń Rybna', 'Gołonóg Centrum')
+      .getRides(7, 0, 9, 0)
+      .execute();
+
+    // then
+    expect(output.rides.length).toBeGreaterThan(0);
+    output.rides.forEach(ride => {
+      expect(ride.from).toBe('Pogoń Rybna')
+      expect(ride.to).toBe('Gołonóg Centrum')
+      expect(time2ISO(ride.departure)).toMatch(/[7-9]:[0-5][0-9]/)
+      expect(time2ISO(ride.arrival)).toMatch(/[7-9]:[0-5][0-9]/)
+      expect(ride.lineNo).toBe('21')
+      expect(ride.to.localeCompare(ride.from)).toBeLessThan(0)
+    });
   });
 });
