@@ -34,11 +34,16 @@ export interface RouteStopLink {
 }
 
 export interface RideLink {
-  time: string;
+  time: Time;
   el: ElementHandle<Element>;
 }
 
-export interface ScrapeContext {
+export interface RidesOutput {
+  rides: RouteWithTimes[];
+}
+
+export interface ScrapeContext<T> {
   page: Page;
   browser: Browser;
+  output: T;
 }
