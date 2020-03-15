@@ -97,7 +97,13 @@ export class ScrapeBuilder {
           throw new Error(`${lineLinks.length} links found matching ${lineNo} within ${type}`);
         }
         await (lineLinks[0] as HTMLElement).click();
-        await page.waitForSelector(SELECTORS.LinePage.LineNumber);
+        try {
+          await page.waitForSelector(SELECTORS.LinePage.LineNumber, { timeout: 3000 });
+        } catch (e) {
+          const [targetElement] = await page.$x('//strong[contains(., "Aktualny rozkład jazdy dla linii")]/..');
+          await targetElement.click();
+          await page.waitForSelector(SELECTORS.LinePage.LineNumber, { timeout: 3000 });
+        }
       }
     );
 
@@ -109,7 +115,9 @@ export class ScrapeBuilder {
       async (page: Page) => {
         const stopsLists = await asyncMap(await page.$$(SELECTORS.LinePage.StopsList), RouteStopsListFactory.init);
         const stopsList = stopsLists.find(sl => sl.matchesRoute(origin, destination));
+        let waitForNavi = page.waitForNavigation();
         await (stopsList.getStop(origin).el).click();
+        await waitForNavi;
         await page.waitForSelector(SELECTORS.TimetablePage.TodaysRidesHeader);
       }
     );
