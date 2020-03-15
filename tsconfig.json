@@ -5,7 +5,12 @@
     "target": "es6",
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "dist"
+    "outDir": "dist",
+    "types": [
+      "puppeteer",
+      "jest-environment-puppeteer",
+      "expect-puppeteer"
+    ]
   },
   "lib": ["es2015"]
 }

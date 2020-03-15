@@ -1,5 +1,8 @@
 module.exports = {
-  preset: 'ts-jest',
+  preset: 'jest-puppeteer',
   testEnvironment: 'node',
-  testPathIgnorePatterns: ['/node_modules/', '/dist/']
+  testPathIgnorePatterns: ['/node_modules/', '/dist/'],
+	transform: {
+		"^.+\\.ts?$": "ts-jest"
+	},
 };

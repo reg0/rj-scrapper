@@ -4,6 +4,7 @@ import { ScrapeContext } from "../src/rjztm/interfaces";
 import { time2ISO } from "../src/utils/time";
 
 let ctx: ScrapeContext<undefined>;
+jest.setTimeout(30000);
 
 beforeAll(async () => {
   ctx = await ScrapeBuilder.initScrapeContext();
