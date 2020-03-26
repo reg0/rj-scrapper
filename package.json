@@ -5,7 +5,8 @@
   "main": "src/app.ts",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "test": "jest"
+    "test": "jest",
+    "lint": "eslint . --ext .js,.ts"
   },
   "repository": {
     "type": "git",
@@ -28,6 +29,9 @@
     "@types/jest-environment-puppeteer": "^4.3.1",
     "@types/puppeteer": "^2.0.1",
     "@types/rx": "^4.1.1",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "eslint": "^6.8.0",
     "jest": "^25.1.0",
     "jest-puppeteer": "^4.4.0",
     "ts-jest": "^25.2.1",
