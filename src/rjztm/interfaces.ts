@@ -46,4 +46,5 @@ export interface ScrapeContext<T> {
   page: Page;
   browser: Browser;
   output: T;
+  error?: any;
 }
