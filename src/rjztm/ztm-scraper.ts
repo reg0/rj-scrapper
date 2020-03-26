@@ -53,6 +53,7 @@ import { ScrapeContext } from './interfaces';
 export class ScrapeBuilder<T> {
   private steps: Function[] = [];
   private scrapeCtx: ScrapeContext<T>;
+  private rideCtx: Partial<Route> = {};
 
   static async initScrapeContext() {
     const browser = await puppeteer.launch();
@@ -85,6 +86,7 @@ export class ScrapeBuilder<T> {
   }
 
   goToLine(type: LineType, lineNo: string) {
+    this.rideCtx.lineNo = lineNo;
     this.steps.push(
       async (page: Page) => {
         const sections = await page.$$(SELECTORS.HomePage.TypeSection);
@@ -112,6 +114,8 @@ export class ScrapeBuilder<T> {
   }
 
   goToRoute(origin: string, destination: string) {
+    this.rideCtx.from = origin;
+    this.rideCtx.to = destination;
     this.steps.push(
       async (page: Page) => {
         const stopsLists = await asyncMap(await page.$$(SELECTORS.LinePage.StopsList), RouteStopsListFactory.init);
