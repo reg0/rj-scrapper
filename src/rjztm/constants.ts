@@ -8,9 +8,11 @@ export enum LineType {
   SUBSTITUTE = 'Autobus - Autobusowa komunikacja zastępcza' 
 }
 
-export const HOME_PAGE = 'https://rj.metropoliaztm.pl/rozklady/';
+export const BASE_URL = 'https://rj.metropoliaztm.pl';
+export const HOME_PAGE = `${BASE_URL}/rozklady/`;
 
 const contentPane = '.lineList';
+const todaysRidesSection = '.panel-info';
 
 export const SELECTORS = {
   HomePage: {
@@ -26,6 +28,16 @@ export const SELECTORS = {
   },
   TimetablePage: {
     Direction: '.lead strong',
-    TodaysRidesHeader: '.panel-info h2.panel-title',
+    TodaysRidesHeader: todaysRidesSection + ' h2.panel-title',
+    TodaysRidesHours: todaysRidesSection + ' .panel-body:not(.rundaycalendar) .arrival-time',
+    NoRidesTodayWarning: todaysRidesSection + ' .panel-body:not(.rundaycalendar) .alert-warning',
+    RidesDeparturesMinutesWithinHour: 'sup a',
+  },
+  RidePage: {
+    StopsRows: 'tr.run-row',
+    StopName: 'td:first-child a.dropdown-toggle',
+    StopDepartureTime: 'td:nth-child(2)'
   }
 }
+
+export const NO_RIDES_TODAY_WARNING = 'brak kursów';
