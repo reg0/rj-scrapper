@@ -50,17 +50,18 @@ import { ScrapeContext } from './interfaces';
 //   fetchResults(to: string): Promise<RouteWithTimes[]>;
 // }
 
-export class ScrapeBuilder {
+export class ScrapeBuilder<T> {
   private steps: Function[] = [];
-  private scrapeCtx: ScrapeContext;
+  private scrapeCtx: ScrapeContext<T>;
 
   static async initScrapeContext() {
     const browser = await puppeteer.launch();
     const page: Page = await browser.newPage();
-    return { page, browser };
+
+    return { page, browser, output: undefined };
   }
 
-  static async init(ctx?: ScrapeContext): Promise<ScrapeBuilder> {
+  static async init<T>(ctx?: ScrapeContext<T>): Promise<ScrapeBuilder<T>> {
     if (ctx) {
       return new ScrapeBuilder(ctx);
     } else {
@@ -68,7 +69,7 @@ export class ScrapeBuilder {
     }
   }
 
-  private constructor(ctx?: ScrapeContext) {
+  private constructor(ctx?: ScrapeContext<T>) {
     this.scrapeCtx = ctx;
   }
 
@@ -125,7 +126,9 @@ export class ScrapeBuilder {
     return this;
   }
 
-  async execute(): Promise<ScrapeContext> {
+
+
+  async execute(): Promise<ScrapeContext<T>> {
     await asyncForEach(this.steps, async step => await step(this.scrapeCtx.page));
 
     return this.scrapeCtx;
