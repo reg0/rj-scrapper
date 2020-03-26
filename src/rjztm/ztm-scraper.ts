@@ -3,7 +3,9 @@ import puppeteer, { Page } from 'puppeteer';
 import { asyncFind, asyncFilter, asyncMap, asyncForEach } from "../utils/async";
 import { LineType, SELECTORS, HOME_PAGE } from "./constants";
 import { RouteStopsListFactory } from './route-stops-list';
-import { ScrapeContext } from './interfaces';
+import { ScrapeContext, RidesOutput, Route } from './interfaces';
+import { RidesListFactory } from './rides-list';
+import { isObservable } from 'rxjs';
 // class ZtmScraperImpl implements ZtmScraper {
 
 //   constructor(private rc: RouteChecker) { }
@@ -130,7 +132,27 @@ export class ScrapeBuilder<T> {
     return this;
   }
 
+  getRides(hrsFrom: number, minsFrom: number, hrsTo: number, minsTo: number) {
+    const _this = this as unknown as ScrapeBuilder<RidesOutput>;
+    _this.steps.push(
+      async (page: Page) => {
+        const hoursList = await RidesListFactory.init(
+          await page.$$(SELECTORS.TimetablePage.TodaysRidesHours),
+          await page.$(SELECTORS.TimetablePage.NoRidesTodayWarning),
+          hrsFrom, minsFrom, hrsTo, minsTo
+        );
 
+        await hoursList.getRides(_this.scrapeCtx, this.rideCtx as Route).toPromise().then(results => {
+          _this.scrapeCtx.error = results.some(it => it.error) ? results.find(it => it.error).error : undefined;
+          _this.scrapeCtx.output = {
+            rides: results.map(it => it.result)
+          };
+        })
+        
+      }
+    );
+    return _this;
+  }
 
   async execute(): Promise<ScrapeContext<T>> {
     await asyncForEach(this.steps, async step => await step(this.scrapeCtx.page));
