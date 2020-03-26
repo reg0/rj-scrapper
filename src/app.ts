@@ -1,5 +1,5 @@
 class App {
-  public start() {
+  public start(): void {
     console.log("Start");
   }
 }

@@ -12,11 +12,11 @@ export class ScrapeBuilder {
   private scrapeCtx: ScrapeContext<RidesOutput>;
   private rideCtx: Partial<Route> = {};
 
-  static async initScrapeContext() {
+  static async initScrapeContext(): Promise<ScrapeContext<RidesOutput>> {
     const browser = await puppeteer.launch();
     const page: Page = await browser.newPage();
 
-    return { page, browser, output: undefined };
+    return { page, browser, output: undefined } as ScrapeContext<RidesOutput>;
   }
 
   static async init(ctx?: ScrapeContext<RidesOutput>): Promise<ScrapeBuilder> {
@@ -31,20 +31,20 @@ export class ScrapeBuilder {
     this.scrapeCtx = ctx;
   }
 
-  goToZtm() {
+  goToZtm(): this {
     this.steps.push(goToZtm);
 
     return this;
   }
 
-  goToLine(type: LineType, lineNo: string) {
+  goToLine(type: LineType, lineNo: string): this {
     this.rideCtx.lineNo = lineNo;
     this.steps.push(goToLine(type, lineNo));
 
     return this;
   }
 
-  goToRoute(origin: string, destination: string) {
+  goToRoute(origin: string, destination: string): this {
     this.rideCtx.from = origin;
     this.rideCtx.to = destination;
     this.steps.push(goToRoute(origin, destination));
@@ -52,7 +52,7 @@ export class ScrapeBuilder {
     return this;
   }
 
-  getRides(hrsFrom: number, minsFrom: number, hrsTo: number, minsTo: number) {
+  getRides(hrsFrom: number, minsFrom: number, hrsTo: number, minsTo: number): this {
     this.steps.push(
       getRides(this.scrapeCtx as unknown as ScrapeContext<RidesOutput>, this.rideCtx as Route, hrsFrom, minsFrom, hrsTo, minsTo)
     );

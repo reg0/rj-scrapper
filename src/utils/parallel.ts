@@ -9,7 +9,7 @@ export interface Task<T,R> {
 export interface TaskResult<T, R> {
   input: T;
   result: R | null;
-  error?: any;
+  error?: Error;
 }
 
 export class ParallelTasks<T,R> {

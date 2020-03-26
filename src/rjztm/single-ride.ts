@@ -1,19 +1,19 @@
 import { BASE_URL, SELECTORS } from "./constants";
 import { asyncFind } from "../utils/async";
-import { RouteWithTimes, RideLink, ScrapeContext, Route, RidesOutput } from "./interfaces";
+import { RouteWithTimes, RideLink, ScrapeContext, Route } from "./interfaces";
 import { flatMap } from "rxjs/operators";
-import { of } from "rxjs";
+import { of, Observable } from "rxjs";
 import { ElementHandle } from "puppeteer";
 
 export class SingleRideProcessor<T> {
   constructor(private ctx: ScrapeContext<T>, private route: Route) { }
   
-  getTask(ride: RideLink) {
+  getTask(ride: RideLink): Observable<RouteWithTimes> {
     return of(ride).pipe(
       flatMap(this.rideToResult.bind(this))
-  )};
+  )}
 
-  private async rideToResult(ride: RideLink) {
+  private async rideToResult(ride: RideLink): Promise<RouteWithTimes> {
     const tab = await this.ctx.browser.newPage();
     const rideUrl = BASE_URL + await ride.el.evaluate(a => a.getAttribute('href'));
     await tab.goto(rideUrl);
@@ -31,5 +31,5 @@ export class SingleRideProcessor<T> {
     await tab.close();
     
     return {...this.route, departure: ride.time, arrival: {hrs: Number(arrivalHrs), mins: Number(arrivalMins)}} as RouteWithTimes;
-  };
+  }
 }
