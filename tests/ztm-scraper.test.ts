@@ -1,9 +1,9 @@
 import { ScrapeBuilder } from "../src/rjztm/ztm-scraper";
 import { LineType, SELECTORS } from "../src/rjztm/constants";
-import { ScrapeContext } from "../src/rjztm/interfaces";
+import { ScrapeContext, RidesOutput } from "../src/rjztm/interfaces";
 import { time2ISO } from "../src/utils/time";
 
-let ctx: ScrapeContext<undefined>;
+let ctx: ScrapeContext<RidesOutput>;
 jest.setTimeout(30000);
 
 beforeAll(async () => {
@@ -67,7 +67,6 @@ describe('ScrapeBuilder', () => {
     const direction = await page.$eval(SELECTORS.TimetablePage.Direction, el => (el as HTMLElement).innerText.trim());
 
     // then
-    console.log(direction);
     expect(direction.indexOf('Kierunek: Tworze')).toBeGreaterThanOrEqual(0);
 
     // when
@@ -79,7 +78,7 @@ describe('ScrapeBuilder', () => {
 
   test('004. getRides() returns list of rides', async () => {
     // given / when
-    const {output} = await (await ScrapeBuilder.init(ctx))
+    const {output, error} = await (await ScrapeBuilder.init(ctx))
       .goToZtm()
       .goToLine(LineType.TRAM, '21')
       .goToRoute('Pogoń Rybna', 'Gołonóg Centrum')
@@ -87,6 +86,7 @@ describe('ScrapeBuilder', () => {
       .execute();
 
     // then
+    expect(error).toBeUndefined();
     expect(output.rides.length).toBeGreaterThan(0);
     output.rides.forEach(ride => {
       expect(ride.from).toBe('Pogoń Rybna')
