@@ -5,8 +5,8 @@ import { flatMap } from "rxjs/operators";
 import { of } from "rxjs";
 import { ElementHandle } from "puppeteer";
 
-export class SingleRideProcessor {
-  constructor(private ctx: ScrapeContext<RidesOutput>, private route: Route) { }
+export class SingleRideProcessor<T> {
+  constructor(private ctx: ScrapeContext<T>, private route: Route) { }
   
   getTask(ride: RideLink) {
     return of(ride).pipe(

@@ -18,7 +18,7 @@ describe('ScrapeBuilder', () => {
 
   test('001. goToZtm() goes to Rozklady home page and finds section titles', async () => {
     // given
-    const {page} = await (await ScrapeBuilder.init<RidesOutput>(ctx))
+    const {page} = await (await ScrapeBuilder.init(ctx))
       .goToZtm()
       .execute();
 
@@ -36,7 +36,7 @@ describe('ScrapeBuilder', () => {
 
   test('002. goToLine() goes to line\'s home page and finds number and two directions', async () => {
     // given
-    const {page} = await (await ScrapeBuilder.init<RidesOutput>(ctx))
+    const {page} = await (await ScrapeBuilder.init(ctx))
       .goToZtm()
       .goToLine(LineType.TRAM, '21')
       .execute();
@@ -57,7 +57,7 @@ describe('ScrapeBuilder', () => {
 
   test('003. goToRoute() goes to origin stop and finds today\'s rides', async () => {
     // given
-    const {page} = await (await ScrapeBuilder.init<RidesOutput>(ctx))
+    const {page} = await (await ScrapeBuilder.init(ctx))
       .goToZtm()
       .goToLine(LineType.TRAM, '21')
       .goToRoute('Pogoń Rybna', 'Gołonóg Centrum')
@@ -78,7 +78,7 @@ describe('ScrapeBuilder', () => {
 
   test('004. getRides() returns list of rides', async () => {
     // given / when
-    const {output, error} = await (await ScrapeBuilder.init<RidesOutput>(ctx))
+    const {output, error} = await (await ScrapeBuilder.init(ctx))
       .goToZtm()
       .goToLine(LineType.TRAM, '21')
       .goToRoute('Pogoń Rybna', 'Gołonóg Centrum')

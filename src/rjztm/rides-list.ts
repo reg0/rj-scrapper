@@ -28,9 +28,9 @@ class RidesList {
     this.rides = allRrides.filter(filterByHours(from, to));
   }
 
-  getRides(ctx: ScrapeContext<RidesOutput>, route: Route): Observable<TaskResult<RideLink, RouteWithTimes>[]> {
+  getRides<T>(ctx: ScrapeContext<T>, route: Route): Observable<TaskResult<RideLink, RouteWithTimes>[]> {
 
-    const singleRideProcessor = new SingleRideProcessor(ctx, route);
+    const singleRideProcessor = new SingleRideProcessor<T>(ctx, route);
 
     const rideToTask = (it: RideLink) => ({
       input: it,
