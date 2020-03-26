@@ -5,52 +5,7 @@ import { LineType, SELECTORS, HOME_PAGE } from "./constants";
 import { RouteStopsListFactory } from './route-stops-list';
 import { ScrapeContext, RidesOutput, Route } from './interfaces';
 import { RidesListFactory } from './rides-list';
-import { isObservable } from 'rxjs';
-// class ZtmScraperImpl implements ZtmScraper {
 
-//   constructor(private rc: RouteChecker) { }
-
-//   async find(q: Query): Promise<RouteWithTimes[]> {
-//     return (await Promise.all(
-//       q.routes.map(
-//         this.rc.findRides
-//       )
-//     )).reduce((res, cur) => res.concat(...cur), []);
-//   }
-// }
-
-// class RouteCheckerImpl implements RouteChecker {
-//   constructor(private se: ScrapingEngine) { }
-
-//   findRides(r: Route): Promise<RouteWithTimes[]> {
-//     const scrape = this.se.init();
-//     scrape
-//       .goToZtm(r.lineNo)
-//       .goToStart(r.from)
-//       .fetchDepartures()
-//       .findUpcoming(new Date())
-//       .fetchResults(r.to);
-
-
-//     Promise.resolve(this.se.init(r))
-//       .then(ctx => ctx.goToZtm())
-//       .then(ctx => ctx.goToStart())
-//       .then(ctx => ctx.fetchDepartures())
-//       .then(ctx => ctx.findUpcoming())
-//   }
-// }
-
-// interface ScrapingEngine {
-//   init(r: Route): ScrapingContext;
-// }
-
-// interface ScrapingContext {
-//   goToZtm(lineNo: string): Promise<ScrapingContext>;
-//   goToStart(from: string): Promise<ScrapingContext>;
-//   fetchDepartures(): Promise<ScrapingContext>;
-//   findUpcoming(startAt: Date): Promise<ScrapingContext>;
-//   fetchResults(to: string): Promise<RouteWithTimes[]>;
-// }
 
 export class ScrapeBuilder<T> {
   private steps: Function[] = [];
