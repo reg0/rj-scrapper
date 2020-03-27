@@ -7,19 +7,6 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Jest All",
-      "program": "${workspaceFolder}/node_modules/.bin/jest",
-      "args": ["--runInBand"],
-      "console": "integratedTerminal",
-      "internalConsoleOptions": "neverOpen",
-      "disableOptimisticBPs": true,
-      "windows": {
-        "program": "${workspaceFolder}/node_modules/jest/bin/jest",
-      }
-    },
-    {
-      "type": "node",
-      "request": "launch",
       "name": "Mocha All",
       "program": "${workspaceFolder}/node_modules/mocha/bin/_mocha",
       "args": [
@@ -33,19 +20,6 @@
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "protocol": "inspector"
-    },
-    {
-      "name": "Debug Jest Tests",
-      "type": "node",
-      "request": "launch",
-      "runtimeArgs": [
-        "--inspect-brk",
-        "${workspaceRoot}/node_modules/jest/bin/jest.js",
-        "--runInBand"
-      ],
-      "console": "internalConsole",
-      "internalConsoleOptions": "neverOpen",
-      "port": 9229
     },
     {
       "type": "node",

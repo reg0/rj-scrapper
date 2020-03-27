@@ -5,10 +5,8 @@
   "main": "src/app.ts",
   "scripts": {
     "start": "tsc && node dist/app.js",
-    "test2": "jest",
     "test": "mocha -r ts-node/register/transpile-only -r source-map-support/register tests/**/*.test.ts",
-    "lint": "eslint . --ext .js,.ts",
-    "coverage": "nyc npm run test"
+    "lint": "eslint . --ext .js,.ts"
   },
   "repository": {
     "type": "git",
@@ -26,11 +24,8 @@
     "rxjs": "^6.5.4"
   },
   "devDependencies": {
-    "@istanbuljs/nyc-config-typescript": "^1.0.1",
     "@types/chai": "^4.2.11",
     "@types/expect-puppeteer": "^4.4.0",
-    "@types/jest": "^25.1.4",
-    "@types/jest-environment-puppeteer": "^4.3.1",
     "@types/mocha": "^7.0.2",
     "@types/puppeteer": "^2.0.1",
     "@types/rx": "^4.1.1",
@@ -38,10 +33,7 @@
     "@typescript-eslint/parser": "^2.25.0",
     "chai": "^4.2.0",
     "eslint": "^6.8.0",
-    "jest": "^25.1.0",
-    "jest-puppeteer": "^4.4.0",
     "mocha": "^7.1.1",
-    "nyc": "^15.0.0",
     "source-map-support": "^0.5.16",
     "ts-jest": "^25.2.1",
     "ts-node": "^8.8.1",
