@@ -1,4 +1,5 @@
 import { ElementHandle, Page, Browser } from "puppeteer";
+import { LineType } from "./constants";
 
 export interface Time {
   hrs: number;
@@ -7,6 +8,7 @@ export interface Time {
 
 export interface Route {
   lineNo: string;
+  type: LineType;
   from: string;
   to: string;
 }

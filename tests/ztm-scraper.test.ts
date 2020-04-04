@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import { ScrapeBuilder } from "../src/rjztm/ztm-scraper";
+import { ScrapeBuilder } from "../src/rjztm/scrape-builder";
 import { LineType, SELECTORS } from "../src/rjztm/constants";
 import { ScrapeContext, RidesOutput } from "../src/rjztm/interfaces";
 import { time2ISO } from "../src/utils/time";

@@ -13,8 +13,14 @@ export class ScrapeBuilder {
   private rideCtx: Partial<Route> = {};
 
   static async initScrapeContext(): Promise<ScrapeContext<RidesOutput>> {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({ args: [
+      '--no-sandbox',
+      '--headless',
+      // '--disable-gpu',
+      '--window-size=1920x1080',
+    ] });
     const page: Page = await browser.newPage();
+    // await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3419.0 Safari/537.36');    
 
     return { page, browser, output: undefined } as ScrapeContext<RidesOutput>;
   }
