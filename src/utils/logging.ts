@@ -8,7 +8,7 @@ const LOG_LEVELS = {
   error: 1,
 }
 
-const DEFAULT_LOG_LEVEL = LOG_LEVELS.debug;
+const DEFAULT_LOG_LEVEL = LOG_LEVELS.log;
 
 let instance = 0;
 
