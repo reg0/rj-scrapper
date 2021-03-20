@@ -24,7 +24,7 @@ export const findKw = (kwCtx: Partial<KwOutput>, scrapeCtx: ScrapeContext<KwOutp
     if (error) {
       scrapeCtx.error = new Error(error);
     } else {
-      await page.waitFor(500);
+      await page.waitForTimeout(500);
       let captchaError;
       let retryCount = 0;
       do {
@@ -37,7 +37,7 @@ export const findKw = (kwCtx: Partial<KwOutput>, scrapeCtx: ScrapeContext<KwOutp
         }
       //   // await page.click(SELECTORS.HomePage.SearchButton);
       //   await checkDigitEl.press('Enter');
-      //   await page.waitFor(retryCount*500);
+      //   await page.waitForTimeout(retryCount*500);
       //   await waitForNavi;
 
         captchaError = await page.$(SELECTORS.HomePage.CaptchaError);
@@ -46,7 +46,7 @@ export const findKw = (kwCtx: Partial<KwOutput>, scrapeCtx: ScrapeContext<KwOutp
     //  {
     //     waitForNavi = page.waitForNavigation();
     //     await page.click(SELECTORS.HomePage.SearchButton);
-    //     await page.waitFor(1000);
+    //     await page.waitForTimeout(1000);
     //     await waitForNavi;
     //     captchaError = await page.$(SELECTORS.HomePage.CaptchaError);
     //   }
