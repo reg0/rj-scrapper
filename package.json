@@ -21,14 +21,14 @@
   "homepage": "https://github.com/reg0/rj-scrapper#readme",
   "dependencies": {
     "puppeteer": "^2.1.1",
-    "rxjs": "^6.5.4"
+    "rxjs": "^6.6.6"
   },
   "devDependencies": {
     "@types/chai": "^4.2.15",
     "@types/expect-puppeteer": "^4.4.0",
     "@types/mocha": "^7.0.2",
     "@types/puppeteer": "^2.0.1",
-    "@types/rx": "^4.1.1",
+    "@types/rx": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "^2.25.0",
     "@typescript-eslint/parser": "^2.25.0",
     "chai": "^4.3.4",
