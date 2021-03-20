@@ -8,7 +8,7 @@
     "outDir": "dist",
     "types": [
       "puppeteer",
-      "expect-puppeteer"
+      "mocha"
     ]
   },
   "lib": ["es2015"]
