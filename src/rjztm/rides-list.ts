@@ -1,11 +1,12 @@
 import { ElementHandle } from "puppeteer";
-import { RideLink, RouteWithTimes, ScrapeContext, Route } from "./interfaces";
+import { RideLink, RouteWithTimes, Route } from "./interfaces";
 import { asyncMap, asyncReduce } from "../utils/async";
 import { timeISO } from "../utils/time";
 import { ParallelTasks, TaskResult, Task } from "../utils/parallel";
 import { Observable } from "rxjs";
 import { SingleRideProcessor } from "./single-ride";
 import { SELECTORS, NO_RIDES_TODAY_WARNING } from "./constants";
+import { ScrapeContext } from "../common/interfaces";
 
 const getHours =  async (hoursEl: ElementHandle<Element>): Promise<number> => await hoursEl.evaluate(el => {
   return Number(

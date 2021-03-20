@@ -1,7 +1,8 @@
 import puppeteer, { Page } from 'puppeteer';
 import { asyncForEach } from "../utils/async";
 import { LineType } from "./constants";
-import { ScrapeContext, RidesOutput, Route } from './interfaces';
+import { ScrapeContext } from '../common/interfaces';
+import { RidesOutput, Route } from './interfaces';
 import { goToZtm } from './steps/go-to-ztm';
 import { goToLine } from './steps/go-to-line';
 import { goToRoute } from './steps/go-to-route';

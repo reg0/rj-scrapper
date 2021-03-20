@@ -7,6 +7,12 @@ export const asyncForEach = async <T>(array: T[], asyncFn: asyncFnType<T,void>):
   }
 }
 
+export const asyncIterate = async (minI: number, maxI: number, asyncFn: (i: number) => void): Promise<void> => {
+  for (let i = minI; i < maxI; i++) {
+    await asyncFn(i);
+  }
+}
+
 export const asyncFind = async <T>(array: T[], asyncFn: asyncFnType<T, boolean>): Promise<T | undefined> => {
   for (let i = 0; i < array.length; i++) {
     if (await asyncFn(array[i], i, array)) {

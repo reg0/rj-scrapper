@@ -43,10 +43,3 @@ export interface RideLink {
 export interface RidesOutput {
   rides: RouteWithTimes[];
 }
-
-export interface ScrapeContext<T> {
-  page: Page;
-  browser: Browser;
-  output: T;
-  error?: Error;
-}

@@ -1,9 +1,10 @@
 import { BASE_URL, SELECTORS } from "./constants";
 import { asyncFind } from "../utils/async";
-import { RouteWithTimes, RideLink, ScrapeContext, Route } from "./interfaces";
+import { RouteWithTimes, RideLink, Route } from "./interfaces";
 import { flatMap } from "rxjs/operators";
 import { of, Observable } from "rxjs";
 import { ElementHandle } from "puppeteer";
+import { ScrapeContext } from "../common/interfaces";
 
 export class SingleRideProcessor<T> {
   constructor(private ctx: ScrapeContext<T>, private route: Route) { }

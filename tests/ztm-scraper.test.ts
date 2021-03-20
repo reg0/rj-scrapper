@@ -1,7 +1,8 @@
 import { expect } from 'chai';
 import { ScrapeBuilder } from "../src/rjztm/scrape-builder";
 import { LineType, SELECTORS } from "../src/rjztm/constants";
-import { ScrapeContext, RidesOutput } from "../src/rjztm/interfaces";
+import { RidesOutput } from "../src/rjztm/interfaces";
+import { ScrapeContext } from "../src/common/interfaces";
 import { time2ISO } from "../src/utils/time";
 
 let ctx: ScrapeContext<RidesOutput>;

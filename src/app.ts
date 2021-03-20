@@ -1,24 +1,51 @@
-import { Query } from "./rjztm/interfaces";
-import { LineType } from "./rjztm/constants";
-import { ZtmScraperImpl } from "./rjztm/ztm-scraper";
+import { ScrapeContext } from "./common/interfaces";
+import { EkwScrapeBuilder } from "./ekw/ekw-scraper";
+import { KwOutput } from "./ekw/interfaces";
+import { asyncIterate } from "./utils/async";
+import { normalizedKwNumber } from "./utils/kwNumberValidator"
 
 class App {
-  public async start(): Promise<void> {
-    console.log("Start");
-    const q: Query = {
-      routes: [
-        { from: 'Rudna Hallera', to: 'Katowice Strefa Kultury NOSPR', lineNo: '807', type: LineType.BUS },
-        { from: 'Rudna Hallera', to: 'Katowice Strefa Kultury NOSPR', lineNo: '40', type: LineType.BUS },
-        { from: 'Piaski Osiedle Dziekana', to: 'Katowice Strefa Kultury NOSPR', lineNo: '814', type: LineType.BUS },
-      ]
-    }
 
-    try {
-      console.log(JSON.stringify(await (new ZtmScraperImpl().find(q)), undefined, 2));
-    } catch (e) {
-      console.log(e);
-    }
+  private formatOutput(i: number, ctx: ScrapeContext<KwOutput>) {
+    return `${
+      i
+    }\t${
+      ctx.error ? 'E' : ' '
+    }\t${
+      ctx.output?.dateUpdated
+    }\t${
+      ctx.output?.courtId
+    }/${
+      ctx.output?.kwNumber ? normalizedKwNumber(ctx.output?.kwNumber) : ''
+    }/${
+      ctx.output?.checkDigit
+    }\t${
+      ctx.error ? ctx.error.message : ctx.output.owner
+    }\t`;
+  }
+
+  public async start(): Promise<void> {
+    return asyncIterate(45048, 55000, async (i: number) => {
+      const ctx = await EkwScrapeBuilder.initScrapeContext();
+      await (await EkwScrapeBuilder.init(ctx))
+        .goToEkw()
+        .goToKw('PT1R', i)
+        .getOutput()
+        .execute()
+        .then(result => {
+          console.log(this.formatOutput(i, result));
+        });
+    });
   }
 }
 
-new App().start();
+
+
+(async () => {
+  try {
+      await new App().start();
+  } catch (e) {
+      console.error(e);
+  }
+  process.exit(0);
+})();
