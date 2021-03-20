@@ -15,8 +15,11 @@
           "--timeout",
           "999999",
           "--colors",
-          "${workspaceFolder}/tests/*.test.ts",
+          "${workspaceFolder}/tests/ekw*.test.ts",
       ],
+      "env": {
+        "LOG_LEVEL": "debug"
+      },
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
       "protocol": "inspector"

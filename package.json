@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/app.ts",
   "scripts": {
-    "start": "tsc && node dist/app.js",
-    "test": "mocha -r ts-node/register/transpile-only -r source-map-support/register tests/**/*.test.ts",
+    "start": "node.exe -r ts-node/register src/app.ts",
+    "test": "mocha -r ts-node/register/transpile-only -r source-map-support/register tests/**/ekw*.test.ts",
     "lint": "eslint . --ext .js,.ts"
   },
   "repository": {
